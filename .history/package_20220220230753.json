@@ -1,0 +1,16 @@
+{
+  "name": "hanshin",
+  "version": "1.0.0",
+  "description": "택배",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app"
+  },
+  "author": "seungYn",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
