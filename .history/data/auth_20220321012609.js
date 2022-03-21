@@ -34,7 +34,9 @@ const User = sequelize.define('user', {
 export async function createUser(user) {
   const { username, name, password, email } = user;
 
-  return User.create(user).then((data) => {
+  User.create(user).then((data) => {
+    console.log(data.dataValues.id);
+    console.log(data.dataValues);
     return data.dataValues.id;
   });
 

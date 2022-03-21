@@ -34,7 +34,7 @@ const User = sequelize.define('user', {
 export async function createUser(user) {
   const { username, name, password, email } = user;
 
-  return User.create(user).then((data) => {
+  User.create(user).then((data) => {
     return data.dataValues.id;
   });
 
@@ -47,6 +47,7 @@ export async function createUser(user) {
 }
 
 export async function findById(id) {
+  console.log(User.findByPk(id));
   return User.findByPk(id);
   // return db
   //   .execute('SELECT * FROM users WHERE id = ?', [id])

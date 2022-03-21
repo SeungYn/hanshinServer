@@ -53,21 +53,28 @@ const SELECT_ALL =
 
 const SELECT_ALL_NO_TAKE =
   'SELECT date, kind, boxId, sender, receiver, receivedDate, position, name FROM packages WHERE take=0';
-const SELECT_ALL_NO_TAKE_SQ = {
-  attributes: [
-    'date',
-    'kind',
-    'boxId',
-    'sender',
-    'receiver',
-    'receivedDate',
-    'position',
-    'name',
-  ],
-};
+const SELECT_ALL_NO_TAKE_SQ = [
+  'date',
+  'kind',
+  'boxId',
+  'sender',
+  'receiver',
+  'receivedDate',
+  'position',
+  'name',
+];
 export async function getNotTakePackages() {
   return Packages.findAll({
-    ...SELECT_ALL_NO_TAKE_SQ,
+    attributes: [
+      'date',
+      'kind',
+      'boxId',
+      'sender',
+      'receiver',
+      'receivedDate',
+      'position',
+      'name',
+    ],
     where: { take: 0 },
   });
   // return db //
@@ -76,10 +83,8 @@ export async function getNotTakePackages() {
 }
 
 export async function getNotTakePackagesByKind(kind) {
-  return Packages.findAll({
-    attributes: SELECT_ALL_NO_TAKE_SQ,
-    where: { take: 0, kind },
-  });
+  console.log(kind);
+  return Packages.findAll({ where: { take: 0 } });
   // return db //
   //   .execute(`${SELECT_ALL_NO_TAKE} AND kind = ?`, [kind])
   //   .then((result) => result[0]);
@@ -91,21 +96,17 @@ export async function getAllPackages() {
 
 export async function createPackages(data) {
   console.log(data);
-  return Packages.bulkCreate(data);
+  Packages.bulkCreate(data).then((result) => {
+    console.log(result);
+  });
   // db.query(
   //   `INSERT INTO packages (date, boxId, kind, sender,receiver, receivedDate, position, name) VALUES ?`,
   //   [data]
   // );
 }
 export async function takePackages(boxId, name, position) {
-  Packages.update(
-    { name, position, take: 1 },
-    {
-      where: { boxId },
-    }
+  return db.query(
+    `UPDATE packages SET take = 1, name=? , position=? WHERE boxId in (?)`,
+    [name, position, boxId]
   );
-  // return db.query(
-  //   `UPDATE packages SET take = 1, name=? , position=? WHERE boxId in (?)`,
-  //   [name, position, boxId]
-  // );
 }

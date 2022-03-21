@@ -67,7 +67,7 @@ const SELECT_ALL_NO_TAKE_SQ = {
 };
 export async function getNotTakePackages() {
   return Packages.findAll({
-    ...SELECT_ALL_NO_TAKE_SQ,
+    attributes: SELECT_ALL_NO_TAKE_SQ,
     where: { take: 0 },
   });
   // return db //
@@ -76,6 +76,7 @@ export async function getNotTakePackages() {
 }
 
 export async function getNotTakePackagesByKind(kind) {
+  console.log(kind);
   return Packages.findAll({
     attributes: SELECT_ALL_NO_TAKE_SQ,
     where: { take: 0, kind },
@@ -91,21 +92,17 @@ export async function getAllPackages() {
 
 export async function createPackages(data) {
   console.log(data);
-  return Packages.bulkCreate(data);
+  Packages.bulkCreate(data).then((result) => {
+    console.log(result);
+  });
   // db.query(
   //   `INSERT INTO packages (date, boxId, kind, sender,receiver, receivedDate, position, name) VALUES ?`,
   //   [data]
   // );
 }
 export async function takePackages(boxId, name, position) {
-  Packages.update(
-    { name, position, take: 1 },
-    {
-      where: { boxId },
-    }
+  return db.query(
+    `UPDATE packages SET take = 1, name=? , position=? WHERE boxId in (?)`,
+    [name, position, boxId]
   );
-  // return db.query(
-  //   `UPDATE packages SET take = 1, name=? , position=? WHERE boxId in (?)`,
-  //   [name, position, boxId]
-  // );
 }

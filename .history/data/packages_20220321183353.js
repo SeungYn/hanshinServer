@@ -76,6 +76,7 @@ export async function getNotTakePackages() {
 }
 
 export async function getNotTakePackagesByKind(kind) {
+  console.log(kind);
   return Packages.findAll({
     attributes: SELECT_ALL_NO_TAKE_SQ,
     where: { take: 0, kind },

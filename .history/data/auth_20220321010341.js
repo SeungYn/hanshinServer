@@ -25,7 +25,7 @@ const User = sequelize.define('user', {
     type: DataTypes.STRING(128),
     allowNull: false,
   },
-  authority: {
+  athority: {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0,
@@ -33,9 +33,9 @@ const User = sequelize.define('user', {
 });
 export async function createUser(user) {
   const { username, name, password, email } = user;
-
-  return User.create(user).then((data) => {
-    return data.dataValues.id;
+  console.log(user);
+  User.create(user).then((data) => {
+    console.log(data.dataValues.athority);
   });
 
   // return db

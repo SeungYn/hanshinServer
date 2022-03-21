@@ -43,6 +43,5 @@ export async function updateTakePackages(req, res) {
   const { boxId, name, position } = req.body;
 
   await packagesRepository.takePackages(boxId, name, position);
-
   res.status(200).json('ggod');
 }

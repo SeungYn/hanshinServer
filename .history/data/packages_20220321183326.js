@@ -76,6 +76,7 @@ export async function getNotTakePackages() {
 }
 
 export async function getNotTakePackagesByKind(kind) {
+  console.log(kind);
   return Packages.findAll({
     attributes: SELECT_ALL_NO_TAKE_SQ,
     where: { take: 0, kind },
@@ -91,7 +92,9 @@ export async function getAllPackages() {
 
 export async function createPackages(data) {
   console.log(data);
-  return Packages.bulkCreate(data);
+  Packages.bulkCreate(data).then((result) => {
+    console.log(result);
+  });
   // db.query(
   //   `INSERT INTO packages (date, boxId, kind, sender,receiver, receivedDate, position, name) VALUES ?`,
   //   [data]

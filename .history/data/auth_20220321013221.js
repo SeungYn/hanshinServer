@@ -47,6 +47,8 @@ export async function createUser(user) {
 }
 
 export async function findById(id) {
+  console.log(id);
+  console.log(User.findByPk(id));
   return User.findByPk(id);
   // return db
   //   .execute('SELECT * FROM users WHERE id = ?', [id])

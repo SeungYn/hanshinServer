@@ -6,7 +6,6 @@ import helmet from 'helmet';
 import packagesRouter from './router/packages.js';
 import authRouter from './router/auth.js';
 import { config } from './config.js';
-import { sequelize } from './db/database.js';
 
 const app = express();
 
@@ -32,11 +31,6 @@ app.use((error, req, res, next) => {
   res.sendStatus(500);
 });
 
-sequelize
-  .sync()
-  .then((client) => {
-    app.listen(config.port, () => {
-      console.log(`Server is started... ${new Date()}`);
-    });
-  })
-  .catch(console.log);
+app.listen(config.port, () => {
+  console.log(`Server is started... ${new Date()}`);
+});

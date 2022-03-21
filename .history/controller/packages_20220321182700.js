@@ -42,7 +42,7 @@ export async function createPackages(req, res) {
 export async function updateTakePackages(req, res) {
   const { boxId, name, position } = req.body;
 
-  await packagesRepository.takePackages(boxId, name, position);
-
+  const a = await packagesRepository.takePackages(boxId, name, position);
+  console.log(a[0]);
   res.status(200).json('ggod');
 }
